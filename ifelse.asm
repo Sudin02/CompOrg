@@ -1,0 +1,35 @@
+.ORIG x3000
+
+LD R0, NUM1
+LD R1, NUM2
+
+; Calculate R0 - R1
+NOT R2, R1
+ADD R2, R2, #1
+ADD R2, R0, R2
+
+; If R0 < R1, go to LESS
+BRn LESS
+
+; Else R3 = -5
+AND R3, R3, #0
+ADD R3, R3, #-5
+BRnzp STORE
+
+; If R0 < R1, R3 = 5
+LESS
+AND R3, R3, #0
+ADD R3, R3, #5
+
+; Store R3 at x8002
+STORE
+LD R4, ADDRESS
+STR R3, R4, #0
+
+HALT
+
+NUM1    .FILL #3
+NUM2    .FILL #5
+ADDRESS .FILL x8002
+
+.END
